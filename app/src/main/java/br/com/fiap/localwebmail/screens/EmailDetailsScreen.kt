@@ -34,7 +34,8 @@ fun EmailDetailsScreen(navController: NavController, email: Email) {
                 }
             )
         }
-    ) { innerPadding ->
+    )
+    { innerPadding ->
         Column(
             modifier = Modifier
                 .fillMaxSize()

@@ -13,13 +13,16 @@ import br.com.fiap.localwebmail.model.emails
 
 @Composable
 fun EmailScreen(navController: NavController) {
+
+
     Scaffold(
         floatingActionButton = {
             FloatingActionButton(onClick = { navController.navigate("emailpage") }) {
                 Icon(imageVector = Icons.Filled.Add, contentDescription = "Novo E-mail")
             }
         }
-    ) { innerPadding ->
+    )
+    { innerPadding ->
         LazyColumn(contentPadding = innerPadding) {
             items(emails) { email ->
                 EmailItem(email, navController)
