@@ -4,6 +4,8 @@ package br.com.fiap.localwebmail
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
+import androidx.compose.animation.slideInHorizontally
+import androidx.compose.animation.slideOutHorizontally
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
@@ -16,6 +18,7 @@ import br.com.fiap.localwebmail.screens.EmailDetailsScreen
 import br.com.fiap.localwebmail.screens.EmailPage
 import br.com.fiap.localwebmail.screens.EmailScreen
 import br.com.fiap.localwebmail.screens.EmailSentScreen
+import br.com.fiap.localwebmail.screens.Menu
 import br.com.fiap.localwebmail.ui.theme.LocalwebMailTheme
 
 class MainActivity : ComponentActivity() {
@@ -34,6 +37,15 @@ class MainActivity : ComponentActivity() {
                     ){
                         composable(route = "email") { EmailScreen(navController) }
                         composable(route = "emailpage") { EmailPage(navController) }
+                        composable(
+                            route = "menu",
+                            enterTransition = {
+                                slideInHorizontally(initialOffsetX = { -it })
+                            },
+                            exitTransition = {
+                                slideOutHorizontally(targetOffsetX = { -it })
+                            }
+                        ) { Menu(navController) }
                         composable("emailsent") { EmailSentScreen(navController) }
                         composable("emaildetails/{emailId}") { backStackEntry ->
                             val emailId = backStackEntry.arguments?.getString("emailId")

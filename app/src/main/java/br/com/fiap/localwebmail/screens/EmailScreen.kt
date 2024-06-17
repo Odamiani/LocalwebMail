@@ -31,9 +31,9 @@ fun EmailScreen(navController: NavController) {
     Scaffold(
         topBar = {
             TopAppBar(
-                title = { Text("Seus e-mails") }, // Title next to the menu
-                actions = { // Actions on the right side
-                    IconButton(onClick = { navController.navigate("emailpage") }) {
+                title = { Text("Seus e-mails") },
+                actions = {
+                    IconButton(onClick = { navController.navigate("menu") }) {
                         Icon(imageVector = Icons.Filled.Menu, contentDescription = "Menu")
                     }
                 }

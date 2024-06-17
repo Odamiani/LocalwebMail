@@ -13,11 +13,20 @@ import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.AccountCircle
+import androidx.compose.material.icons.filled.Star
+import androidx.compose.material.icons.outlined.Star
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
+import androidx.compose.material3.Icon
+import androidx.compose.material3.IconButton
+import androidx.compose.material3.LocalContentColor
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
@@ -26,8 +35,7 @@ import br.com.fiap.localwebmail.model.Email
 
 @Composable
 fun EmailItem(email: Email, navController: NavController) {
-
-
+    var isFavorite by remember { mutableStateOf(email.isFavorite) }
     Card(
         modifier = Modifier
             .height(80.dp)
@@ -63,6 +71,17 @@ fun EmailItem(email: Email, navController: NavController) {
                 Text(text = email.sender, style = MaterialTheme.typography.titleSmall)
             }
             Text(text = email.timestamp, style = MaterialTheme.typography.titleMedium)
+
+            IconButton(onClick = {
+                isFavorite = !isFavorite
+                email.isFavorite = isFavorite
+            }) {
+                Icon(
+                    imageVector = if (isFavorite) Icons.Filled.Star else Icons.Outlined.Star,
+                    contentDescription = if (isFavorite) "Remover dos favoritos" else "Adicionar aos favoritos",
+                    tint = if (isFavorite) Color.Yellow else LocalContentColor.current
+                )
+            }
         }
     }
 }
