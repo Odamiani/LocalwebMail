@@ -7,9 +7,8 @@ import retrofit2.http.Path
 
 interface EmailService {
 
-    @GET("email/{remetente}")
-    fun getEmailsByRemetente(
-        @Path("remetente") remetente : String
-
-    ) : Call<List<Email>>
+    @GET("emails")
+    fun getEmails() : Call<List<Email>>
 }
+
+

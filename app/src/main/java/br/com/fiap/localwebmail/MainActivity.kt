@@ -47,6 +47,7 @@ class MainActivity : ComponentActivity() {
                             }
                         ) { Menu(navController) }
                         composable("emailsent") { EmailSentScreen(navController) }
+
                         composable("emaildetails/{emailId}") { backStackEntry ->
                             val emailId = backStackEntry.arguments?.getString("emailId")
                             val email = emails.find { it.id == emailId }
