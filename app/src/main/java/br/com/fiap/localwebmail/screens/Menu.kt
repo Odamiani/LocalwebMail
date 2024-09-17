@@ -22,9 +22,14 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 
+var isDarkMode by mutableStateOf(false) // Aqui usamos 'by' para desestruturar
+
+
 @Composable
 fun Menu(navController: NavController) {
     var offlineMode by remember { mutableStateOf(false) }
+    //var isDarkMode by remember { mutableStateOf(false) }
+
     Column(
         modifier = Modifier
             .fillMaxSize()
@@ -65,6 +70,15 @@ fun Menu(navController: NavController) {
             Switch(
                 checked = offlineMode,
                 onCheckedChange = { offlineMode = it }
+            )
+        }
+
+        Row(verticalAlignment = Alignment.CenterVertically) {
+            Text("Modo escuro", style = MaterialTheme.typography.bodyLarge)
+            Spacer(modifier = Modifier.weight(1f))
+            Switch(
+                checked = isDarkMode,
+                onCheckedChange = { isDarkMode = it }
             )
         }
     }
