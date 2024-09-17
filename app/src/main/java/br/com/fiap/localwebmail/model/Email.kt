@@ -1,11 +1,7 @@
 package br.com.fiap.localwebmail.model
 
 import android.util.Log
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
-import androidx.compose.runtime.setValue
-import br.com.fiap.localwebmail.service.EmailService
+
 import br.com.fiap.localwebmail.service.RetrofitFactory
 import com.google.gson.annotations.SerializedName
 import retrofit2.Call
@@ -22,13 +18,15 @@ data class Email(
 )
 
 // Lista dinâmica de emails
-val emails = mutableListOf<Email>()
+var emails = mutableListOf<Email>()
 
 val emailService = RetrofitFactory()
 
 
-fun fetchEmails() {
+fun fetchEmails(param: (Any) -> Unit) {
     val call = RetrofitFactory().getEmailService().getEmails()
+
+    Log.i("FIAP","FUNCIONA KRL!!!!!!!!!!!!!!!!!!!!!!!!!!!!!")
 
     call.enqueue(object : Callback<List<Email>> {
         override fun onResponse(
@@ -51,6 +49,9 @@ fun fetchEmails() {
         }
     })
 }
+
+
+
 
 
 
