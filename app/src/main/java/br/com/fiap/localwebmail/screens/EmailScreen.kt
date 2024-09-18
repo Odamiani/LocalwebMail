@@ -44,6 +44,8 @@ fun EmailScreen(navController: NavController) {
             emails = emailList as MutableList<Email>
         }
     }
+
+
     Scaffold(
         topBar = {
             TopAppBar(
