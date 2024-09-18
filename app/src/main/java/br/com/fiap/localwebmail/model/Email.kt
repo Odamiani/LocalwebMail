@@ -19,14 +19,14 @@ data class Email(
 
 // Lista dinâmica de emails
 var emails = mutableListOf<Email>()
+val displayedEmailIds = mutableSetOf<String>()
+
 
 val emailService = RetrofitFactory()
 
 
 fun fetchEmails(param: (Any) -> Unit) {
     val call = RetrofitFactory().getEmailService().getEmails()
-
-    Log.i("FIAP","FUNCIONA KRL!!!!!!!!!!!!!!!!!!!!!!!!!!!!!")
 
     call.enqueue(object : Callback<List<Email>> {
         override fun onResponse(
@@ -35,8 +35,22 @@ fun fetchEmails(param: (Any) -> Unit) {
         ) {
             if (response.isSuccessful) {
                 response.body()?.let { emailList ->
+
+                    // Filtrar os emails que ainda não foram exibidos
+                    val newEmails = emailList.filter { email ->
+                        !displayedEmailIds.contains(email.id)
+                    }
+
+                    // Adicionar os IDs dos novos emails à lista de IDs exibidos
+                    displayedEmailIds.addAll(newEmails.map { it.id })
+
+                    // Atualizar a lista de emails com os novos emails filtrados
+                    emails.clear()
+
+
                     emails.addAll(emailList) // Adicionar os emails da API à lista
                     // Aqui você pode atualizar a UI ou fazer outra ação
+
                     Log.i("FIAP","Emails carregados com sucesso")
                 }
             } else {
@@ -51,13 +65,7 @@ fun fetchEmails(param: (Any) -> Unit) {
 }
 
 
-
-
-
-
-
-
-
+//Emails teste sem a necessidade de comunicar com a API:
 
 //val emails = listOf(
 //    Email("1", "Reunião importante", "João Silva", "10:30", "Prezados, venho por meio deste e-mail convidá-los para uma reunião...", false),
@@ -67,37 +75,3 @@ fun fetchEmails(param: (Any) -> Unit) {
 //    Email("5", "Comprovante de pagamento", "Loja XYZ", "07/06/2024", "Segue seu comprovante de compra...", true),
 //    Email("6", "Alinhamento mensal", "SANTANDER COLABORADORES", "01/06/2024", "Alinhamento sobre metas mensais da equipe...", false)
 //)
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-//val emails = listOf(
-//
-//
-//
-//
-//
-//    Email("1", "Reunião importante", "João Silva", "10:30", "Prezados, venho por meio deste e-mail convidá-los para uma reunião...", false),
-//   Email("2", "Promoção imperdível!", "Loja XYZ", "Ontem", "Não perca a nossa promoção de aniversário...", true),
-//
-//    )
-
-
-
-
-//    Email("3", "fatura cartão", "Loja casas bahia", "10/06/2024", "Sua fatura está disponivel", false),
-//    Email("4", "Seguro de vida", "Funeraria ", "09/06/2024", "Cuide de sua saude e não seja nosso cliente", false),
-//    Email("5", "Comprovante de pagamento", "Loja XYZ", "07/06/2024", "Segue seu comprovante de compra...", true),
-//  Email("6", "Alinhamento mensal", "SANTANDER COLABORADORES", "01/06/2024", "Alinhamento sobre metas mensais da equipe...", false)
-
-

@@ -9,15 +9,14 @@ import androidx.compose.animation.slideOutHorizontally
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
-import androidx.compose.runtime.setValue
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.Modifier
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
+import br.com.fiap.localwebmail.model.Email
 import br.com.fiap.localwebmail.model.emails
+import br.com.fiap.localwebmail.model.fetchEmails
 import br.com.fiap.localwebmail.screens.EmailDetailsScreen
 import br.com.fiap.localwebmail.screens.EmailPage
 import br.com.fiap.localwebmail.screens.EmailScreen
@@ -36,6 +35,12 @@ class MainActivity : ComponentActivity() {
                     modifier = Modifier.fillMaxSize(),
                     color = MaterialTheme.colorScheme.background
                 ) {
+
+                    LaunchedEffect(Unit) {
+                        fetchEmails { emailList ->
+                            emails = emailList as MutableList<Email>
+                        }
+                    }
 
                     val navController = rememberNavController()
                     NavHost(
